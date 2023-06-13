@@ -1,0 +1,25 @@
+{
+  "name": "vue3-learning",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "NODE_ENV=development vite --host",
+    "build": "vite build",
+    "preview": "vite preview",
+    "watch": "NODE_ENV=development vite build --watch --config vite.config.dev.js",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+  },
+  "dependencies": {
+    "@mdi/font": "^7.2.96",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.2",
+    "vuetify": "^3.3.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "sass": "^1.62.1",
+    "terser": "^5.17.7",
+    "vite": "^4.3.9",
+    "vite-plugin-vuetify": "^1.0.2"
+  }
+}
