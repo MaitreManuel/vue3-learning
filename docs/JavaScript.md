@@ -165,8 +165,6 @@ class Vehicle {
 
 ```js
 const car = new Vehicle('Jeep', 'Voiture');
-
-car.startEngine();
 ```
 
 #### Résultat console

@@ -23,7 +23,7 @@ fin p start
 
 ```
 127.0.0.1 web.vue3-learning.docksal.site
-127.0.0.1 vue3-learning.docksal.sited
+127.0.0.1 vue3-learning.docksal.site
 ```
 
 - `Ctrl+S`, puis `Alt-F4`
