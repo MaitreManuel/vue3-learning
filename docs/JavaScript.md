@@ -54,7 +54,7 @@ On voit ici que `var` n'est pas limité par son scope ce qui provoque des mutati
 
 ## Template Literal
 
-Une [chaîne](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/Strings) de caractère standard :
+#### [Chaîne](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/Strings) standard
 
 ```js
 // Single Line
@@ -73,7 +73,7 @@ const fruits = ['apples', 'cherries'];
 let fruitSalad = 'let\'s put some ' + fruits[0] + ' with ' + fruits[1];
 ```
 
-Une chaîne de caractère en ["littéraux de gabarits"](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) :
+#### Chaîne type ["littéraux de gabarits"](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
 
 ```js
 // Single Line
@@ -101,12 +101,16 @@ let fruitSalad = `let's put some ${ fruits[0] } with ${ fruits[1] }`;
 ## Fonctions
 Les [fonctions fléchées](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) sont des [fonctions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions) avec une syntaxe simplifiée et qui redéfinissent leur contexte, ou scope, `this` avec celui du parent.
 
+#### Fonction standard
+
 ```js
 // Regular function
 function sum(a, b) {
   return a + b;
 }
 ```
+
+#### Fonction fléchée
 
 ```js
 // Arrow function
@@ -121,8 +125,12 @@ Sans les accolades, le `return` est implicite, ce qui n'est pas possible avec un
 
 ## Scopes
 
-Pour comprendre comment fonctionnent les scopes en JavaScript et les utiliser avec `this`, voici cet exemple.
-La définition d'une `Class`
+Pour comprendre comment fonctionnent les contextes/scopes en JavaScript et les utiliser avec `this`, voici un exemple.
+<br> La définition d'une [`Class`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) fait qu'elle possède automatiquement un contexte `this` où sont accessibles ses attributs
+et ses méthodes.
+<br> Il en est de même pour un [Objet](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects) classique.
+
+#### Définition de classe
 
 ```js
 class Vehicle {
@@ -144,13 +152,24 @@ class Vehicle {
     bike.regularFunction();
     arrowFunction();
     regularFunction();
+    this.startEngine();
+  }
+
+  startEngine () {
+    console.log(this);
   }
 }
 ```
 
+#### Instance de classe
+
 ```js
 const car = new Vehicle('Jeep', 'Voiture');
+
+car.startEngine();
 ```
+
+#### Résultat console
 
 ```js
 // bike.arrowFunction();
@@ -161,7 +180,12 @@ const car = new Vehicle('Jeep', 'Voiture');
 > Object { _name: "Jeep", _type: "Voiture" }
 // regularFunction();
 > undefined
+// this.startEngine();
+> Object { _name: "Jeep", _type: "Voiture" }
 ```
+
+On voit qu'à chaque appel de `this` dans une fonction fléchée, on appelle le contexte du parent alors qu'avec des fonctions
+standards on appelle le contexte courant.
 
 ## Promise, Callback & Asynchrone
 

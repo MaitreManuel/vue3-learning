@@ -46,9 +46,19 @@ import 'vuetify/styles';
 import { createApp } from 'vue';
 import { createVuetify } from 'vuetify';
 import {
-  VBtn, VCard, VCol, VContainer, VDivider,
-  VLayout, VList, VListItem, VListItemTitle,
-  VNavigationDrawer, VTextField, VMain, VRow,
+  VBtn,
+  VCard,
+  VCol,
+  VContainer,
+  VDivider,
+  VLayout,
+  VList,
+  VListItem,
+  VListItemTitle,
+  VNavigationDrawer,
+  VTextField,
+  VMain,
+  VRow,
 } from 'vuetify/components';
 import {
   Ripple
@@ -65,9 +75,19 @@ const app = createApp(
 
 const vuetify = createVuetify({
   components: {
-    VBtn, VCard, VCol, VContainer, VDivider,
-    VLayout, VList, VListItem, VListItemTitle,
-    VNavigationDrawer, VTextField, VMain, VRow,
+    VBtn,
+    VCard,
+    VCol,
+    VContainer,
+    VDivider,
+    VLayout,
+    VList,
+    VListItem,
+    VListItemTitle,
+    VNavigationDrawer,
+    VTextField,
+    VMain,
+    VRow,
   },
   directives: {
     Ripple,

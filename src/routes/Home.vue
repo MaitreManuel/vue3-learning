@@ -13,6 +13,7 @@
 <script setup>
 import { onMounted } from 'vue';
 
-onMounted(async () => {
+onMounted(() => {
   console.log('App loaded');
+});
 </script>

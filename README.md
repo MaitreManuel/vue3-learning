@@ -22,8 +22,8 @@ fin p start
 - ajouter dans le fichier
 
 ```
-127.0.0.1 node.poc-vue-3-sas.docksal.site
-127.0.0.1 web.poc-vue-3-sas.docksal.site
+127.0.0.1 web.vue3-learning.docksal.site
+127.0.0.1 vue3-learning.docksal.sited
 ```
 
 - `Ctrl+S`, puis `Alt-F4`
