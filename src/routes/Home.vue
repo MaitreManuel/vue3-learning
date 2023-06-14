@@ -13,7 +13,17 @@
 <script setup>
 import { onMounted } from 'vue';
 
+import FakeFetch from '@Src/utils/fakeFetch';
+
+const getFruits = async (cb) => {
+  cb(await FakeFetch(2000));
+};
+
 onMounted(() => {
   console.log('App loaded');
+
+  getFruits((response) => {
+    console.log(response);
+  });
 });
 </script>
