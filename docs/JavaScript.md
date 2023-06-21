@@ -282,7 +282,7 @@ d'une instruction asynchrone. Les promises redirigent nativement le résultat da
 `catch()` en cas d'erreur. `finally()` sera la dernière instruction lancée en cas de réussite ou d'erreur.
 
 ```js
-const getOneFruitByType = (type = 'apple') => {
+const getOneFruitByName = (type = 'apple') => {
   const fruits = ['apple', 'banana', 'cherry'];
   
   return new Promise((resolve, reject) => setTimeout(() => {
@@ -298,7 +298,7 @@ const getOneFruitByType = (type = 'apple') => {
 ```
 
 ```js
-getOneFruitByType('cherry')
+getOneFruitByName('cherry')
   .then((fruit) => {
     console.log(`I found ${ fruit }!`)
   })
