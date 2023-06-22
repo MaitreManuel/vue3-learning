@@ -221,8 +221,19 @@
 </script>
 ```
 
+## Cycle de vie
 
-## Instance de Vue
+```js
+
+```
+
+## Composition d'un composant
+
+```js
+
+```
+
+## Injection de Vue
 
 ```js
 import { createApp } from 'vue';
@@ -392,7 +403,8 @@ Pour les évènements clavier tels que `keyup`, on peut spécifier directement l
 <input @keyup.enter="sendForm" />
 ```
 
-Il existe deux manières de récupérer l'évènement de DOM d'origine :
+Il existe deux manières de récupérer l'évènement de DOM d'origine avec une variable de contexte `$event` ou en utilisant
+une fonction fléchée.
 
 ```js
 <button type="button" @click="handleClick($event)">Click</button>
@@ -402,7 +414,7 @@ Il existe deux manières de récupérer l'évènement de DOM d'origine :
 <button type="button" @click="(event) => handleClick(event)">Click</button>
 ```
 
-On peut aussi créer des évènements "fait-maison" :
+On peut aussi créer des évènements "fait-maison".
 
 ```js
 /* Enfant */
