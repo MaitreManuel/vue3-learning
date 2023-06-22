@@ -1,4 +1,4 @@
-# Les bases de Vue 3
+# Vuetify
 
 ### Installer Vuetify
 ```js

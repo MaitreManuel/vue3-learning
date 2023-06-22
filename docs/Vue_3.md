@@ -391,7 +391,7 @@ Pour les évènements clavier tels que `keyup`, on peut spécifier directement l
 
 - `.enter`
 - `.tab`
-- `.delete` (captures both "Delete" and "Backspace" keys)
+- `.delete` (marche pour les touches "Suppr" et "Backspace")
 - `.esc`
 - `.space`
 - `.up`
