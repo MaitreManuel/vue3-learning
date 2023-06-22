@@ -252,7 +252,7 @@ Il est possible de lier dynamiquement des attributs HTML avec des valeurs JavaSc
 ```js
 <div v-bind:id="fruitName"></div>
 ```
-est identique à :
+est identique à
 
 ```js
 <div :id="fruitName"></div>
@@ -278,7 +278,7 @@ Il existe aussi la directive `v-show` pour jouer avec la visibilité d'un élém
 
 #### Rendu de liste
 
-On peut créer des listes dynamiques avec des tableaux, des objets et même des `range`.
+Pour créer des listes dynamiques avec des tableaux, des objets et même des `range`, on utilise la directive `v-for`
 <br> Cela arrive le plus souvent lorsque l'on execute des requêtes asynchrones.
 
 ```js
@@ -341,13 +341,68 @@ Comme pour les liaisons de classes, il est possible d'associer des valeurs JavaS
 <p :style="{ color: fruitColor }" /></p>
 ```
 
-#### Data binding
+#### Gestion des évènements
+
+Pour attacher des évènements aux éléments de DOM, on utilise la directive `v-on:` ou l'alias `@`.
 
 ```js
-<input v-model="text" />
+<button type="button" v-on:click="nbClick =+ 1">Click n°{{ nbClick }}</button>
 ```
 
-#### Gestion des évènements
+est identique à
+
+```js
+<button type="button" @click="nbClick =+ 1">Click n°{{ nbClick }}</button>
+```
+
+Il est possible d'ajouter des modificateurs d'évènements et même de les chaîner :
+
+- `.stop`: appelle event.stopPropagation(), empêchera dans ce cas les évènements `click` parents de se déclencher
+
+```js
+<div @click="alert('clicked ?')">
+  <button type="button" @click.stop="clickMe">Clicked</button>
+</div>
+```
+
+- `.prevent`: appelle event.preventDefault(), empêchera dans ce cas le formulaire de recharger la page du navigateur
+
+```js
+<form @submit.prevent="nbClick =+ 1"></button>
+```
+
+- `.capture`: utilise le mode « capture » lorsque l'écouteur d'évènements est ajouté, un évènement destiné à un élément interne est géré ici avant d'être géré par ses éléments parents
+- `.self`: seulement déclenché si l'instruction `event.target` est l'élément lui-même, cela ne s'applique pas aux éléments enfants
+- `.once`: l'évènement « click » sera déclenché qu'une fois
+- `.passive`: le comportement par défaut de l'évènement se produit immédiatement
+
+Pour les évènements clavier tels que `keyup`, on peut spécifier directement la touche plutôt que d'utiliser le `event.keyCode` :
+
+- `.enter`
+- `.tab`
+- `.delete` (captures both "Delete" and "Backspace" keys)
+- `.esc`
+- `.space`
+- `.up`
+- `.down`
+- `.left`
+- `.right`
+
+```js
+<input @keyup.enter="sendForm" />
+```
+
+Il existe deux manières de récupérer l'évènement de DOM d'origine :
+
+```js
+<button type="button" @click="handleClick($event)">Click</button>
+```
+
+```js
+<button type="button" @click="(event) => handleClick(event)">Click</button>
+```
+
+On peut aussi créer des évènements "fait-maison" :
 
 ```js
 /* Enfant */
@@ -364,3 +419,65 @@ const onInputText = (text) => {
 /* Parent */
 <my-input @inputText="handleInputText" />
 ```
+
+#### Data binding
+
+Pour lier une valeur JavaScript en lecture et écriture à un élément de DOM, on utilise la directive `v-model`.
+<br> C'est un alias entre la directive `v-bind:value` et `v-bind:change` ou `v-bind:input` selon l'élément.
+
+- Type `text`
+
+```js
+// text = ref('Apple')
+<input v-model="text" type="text" />
+```
+
+```js
+// text = ref('An apple a day keeps the doctor away!')
+<textarea v-model="text"></textarea>
+```
+
+- Type `checkbox` simple
+
+```js
+// active = ref(true)
+<input v-model="active" type="checkbox" />
+```
+
+- Type `checkbox` multiple
+
+```js
+// fruits = ref(['apple'])
+<input v-model="fruits" type="checkbox" value="apple" />
+<input v-model="fruits" type="checkbox" value="cherry" />
+```
+
+- Type `radio`
+```js
+// selectedFruit = 'apple'
+<input v-model="selectedFruit" type="radio" value="apple" selected />
+<input v-model="selectedFruit" type="radio" value="cherry" />
+```
+
+- Type `select` simple
+```js
+// selectedFruit = 'Cherry'
+<select v-model="selectedFruit">
+  <option disabled value="">Select a fruit :</option>
+  <option>Apple</option>
+  <option>Banana</option>
+  <option selected>Cherry</option>
+</select>
+```
+
+- Type `select` multiple
+```js
+// fruitsSalad = ['apple', 'cherry']
+<select v-model="selectedFruit">
+  <option disabled value="">Select one or more fruits :</option>
+  <option value="apple">Apple</option>
+  <option value="banana">Banana</option>
+  <option  value="cherry">Cherry</option>
+</select>
+```
+
