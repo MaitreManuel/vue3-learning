@@ -11,7 +11,7 @@
 /* Parent */
 <template>
   <fruit :color="fruitColor" :set-color="setColor">
-    <template v-slot:fruitName>
+    <template #fruitName>
       <span>{{ fruitName }}</span>
     </template>
   </fruit>
@@ -85,7 +85,7 @@
 /* Parent */
 <template>
   <fruit :color="fruitColor" :set-color="setColor">
-    <template v-slot:fruitName>
+    <template #fruitName>
       <span>{{ fruitName }}</span>
     </template>
   </fruit>
@@ -169,7 +169,7 @@
 /* Parent */
 <template>
   <fruit :color="fruitColor" :set-color="setColor">
-    <template v-slot:fruitName>
+    <template #fruitName>
       <span>{{ fruitName }}</span>
     </template>
   </fruit>
@@ -216,21 +216,9 @@
   const changeColor = () => {
     const colors = ['green', 'orange', 'red', 'yellow'];
     
-    setColor(colors[Math.floor(Math.random() * colors.length)]);
+    props.setColor(colors[Math.floor(Math.random() * colors.length)]);
   };
 </script>
-```
-
-## Cycle de vie
-
-```js
-
-```
-
-## Composition d'un composant
-
-```js
-
 ```
 
 ## Injection de Vue
@@ -489,7 +477,248 @@ Pour lier une valeur JavaScript en lecture et écriture à un élément de DOM, 
   <option disabled value="">Select one or more fruits :</option>
   <option value="apple">Apple</option>
   <option value="banana">Banana</option>
-  <option  value="cherry">Cherry</option>
+  <option value="cherry">Cherry</option>
 </select>
 ```
 
+## Composant
+
+#### Single File Components
+
+Ou SFC, définit un composant monofichier avec une syntaxe réunissant 3 parties : le `template` HTML, le `script` JavaScript
+et le `style` CSS.
+<br> En Vue, les fichiers ont comme extension `.vue`;
+<br> Il est possible de renseigner un moteur spécifique pour chaque :
+```html
+<template lang="pug">
+<script lang="ts">
+<style lang="scss">
+```
+
+- Template
+
+```html
+<template>
+  <h1>Title</h1>
+  <h3>Subtitle</h3>
+  <div class="wrapper">
+    <p>Text</p>
+  </div>
+</template>
+```
+
+- Script
+
+```js
+<script setup>
+  import { onMounted } from 'vue';
+
+  const myVar = ref('');
+
+  onMounted(() => {
+  console.log('App loaded');
+});
+</script>
+```
+
+- Style
+
+```css
+<style>
+  div {
+    background: red;
+  }
+
+  div p {
+    color: white;
+  }
+</style>
+```
+
+#### Cycle de vie
+
+Chaques composants possèdent des fonctions prédéfinies qui représentent son cycle de vie et sont déclenchées à partir de
+leur appel dans le composant parent et lorsqu'e d''une donnée réactive est amenée à muter.
+
+```js
+<script setup>
+  import {
+    onBeforeMount,
+    onMounted,
+    onBeforeUpdate,
+    onUpdated,
+    onBeforeUnmount,
+    onUnmounted,
+  } from 'vue';
+  
+  // equivalent between beforeCreate & create
+
+  onBeforeMount(() => {
+  
+  });
+  onMounted(() => {
+  
+  });
+  onBeforeUpdate(() => {
+  
+  });
+  onUpdated(() => {
+  
+  });
+  onBeforeUnmount(() => {
+  
+  });
+  onUnmounted(() => {
+  
+  });
+</script>
+```
+
+#### Données reactives
+
+Un composant possède ses propres données disponibles qu'à l'intérieur de ce dernier. Elles sont wrappées avec une méthode `ref()`.
+<br> Chaque mutation de donnée déclenche une partie de son cycle de vie.
+<br> Attention, son utilisation dans le `script` est différente. Pour lui assigner une nouvelle valeur, il faut ajouter `.value`.
+Dans le `template`, elle est exposée et n'en a pas besoin.
+
+```js
+<template>
+  <p>{{ fruit }}</p>
+</template>
+
+<script setup>
+  import { ref } from 'vue';
+
+  const fruit = ref('');
+
+  fruit.value = 'Apple';
+</script>
+```
+
+#### Props
+
+Les `props` sont des paramètres qui se passent entre le composant parent et le composant enfant, un peu comme des fonctions.
+<br> Il est aussi possible de modifier des données d'un composant parent via un composant enfant via une fonction passée
+comme `props`.
+
+```js
+/* Enfant */
+<template>
+  <p @click="setText('Mama mia')">{{ text }}</p>
+</template>
+<script setup>
+  import { defineProps } from 'vue';
+
+  const props = defineProps({
+    text: {
+      required: true,
+      type: String,
+    },
+    setText: {
+      required: true,
+      type: Function,
+    },
+  });
+</script>
+/* Parent */
+<template>
+  <child :text="someText" :set-text="changeText" />
+</template>
+<script setup>
+  import { ref } from 'vue';
+  
+  import Child from '@Src/Child.vue';
+  
+  const someText = ref(`It's me Mario`);
+  
+  const changeText = (text) => {
+    someText.value = text;
+  };
+</script>
+```
+
+#### Computed
+
+Avec `computed`, il est possible de créer des données en lecture seule qui se mettent automatiquement à jour avec des données
+telles que `ref`.
+
+```js
+<template>
+  <p>Hi ! My name is {{ fullname }}</p>
+</template>
+<script setup>
+  import { computed, ref } from 'vue';
+
+  const firstname = ref('John');
+  const lastname = ref('Doe');
+  
+  const fullname = computed(() => `${ firstname.value } ${ lastname.value }`);
+</script>
+```
+
+#### Watch
+
+Les fonctions `watch` permettent d'écouter les changements de valeur de n'importe quelles propriétés, même celles créées
+avec `computed`.
+
+```js
+<script setup>
+  import { computed, ref, watch } from 'vue';
+
+  const fruits = ref(['apple', 'cherry', 'pinapple']);
+
+  const fruitsSalad = computed(() => fruits.value.join(' and '));
+  
+  watch(fruitsSalad, (newSalad, oldSalad) => {
+    if (fruits.indexOf('pinapple') > -1) {
+      console.error(`yuk... I prefer the old salad with ${ oldSalad }`);
+    }
+  });
+</script>
+```
+
+#### Slots
+
+Les `slots` sont une manière d'injecter des templates HTML dans un composant enfant depuis un composant parent.
+<br> Ils fonctionnent quasiment de la même manière que les props et on peut les nommer pour en ajouter plusieurs à la fois.
+
+```js
+/* Parent */
+<template>
+  <fruit>
+    <span>{{ fruitName }}</span>
+    <template #color>
+      <span>{{ fruitColor }}</span>
+    </template>
+    <template #condition>
+      <span>{{ fruitCondition }}</span>
+    </template>
+  </fruit>
+</template>
+<script setup>
+  import { ref } from 'vue';
+
+  const fruitColor = ref('Green');
+  const fruitCondition = ref('pristine');
+  const fruitName = ref('apple');
+</script>
+/* Enfant */
+<template>
+  <p>
+    <slot name="color"></slot>
+    <slot name="condition"></slot>
+    <slot></slot>
+  </p>
+</template>
+```
+
+Ce qui rendra en HTML :
+```html
+<p>
+  <span>Green</span>
+  <span>pristine</span>
+  <span>apple</span>
+</p>
+```
+
+L'ordre au niveau du composant parent n'a pas d'incidence.
