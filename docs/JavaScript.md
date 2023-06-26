@@ -124,10 +124,72 @@ const sum = (a, b) => a + b;
 
 Sans les accolades, le `return` est implicite, ce qui n'est pas possible avec une fonction standard.
 
+## Scopes
+
+Pour comprendre comment fonctionnent les contextes/scopes en JavaScript et les utiliser avec `this`, voici un exemple.
+<br> La définition d'une [`Class`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) fait qu'elle possède automatiquement un contexte `this` où sont accessibles ses attributs
+et ses méthodes.
+<br> Il en est de même pour un [Objet](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects) classique.
+
+#### Définition de classe
+
+```js
+class Vehicle {
+  constructor(name, type) {
+    this._name = name;
+    this._type = type;
+    
+    const bike = {
+      name: 'Ducati',
+      type: 'Moto',
+      arrowFunction: () => console.log(this),
+      regularFunction () { console.log(this); },
+    };
+    const arrowFunction = () => console.log(this);
+    function regularFunction() { console.log(this); }
+
+    bike.arrowFunction();
+    bike.regularFunction();
+    arrowFunction();
+    regularFunction();
+    this.startEngine();
+  }
+
+  // Method definition, function is value, name function is key
+  startEngine () { // same as regularFunction: function () {}
+    console.log(this);
+  }
+}
+```
+
+#### Instance de classe
+
+```js
+const car = new Vehicle('Jeep', 'Voiture');
+```
+
+#### Résultat console
+
+```js
+// bike.arrowFunction();
+> Object { _name: "Jeep", _type: "Voiture" }
+// bike.regularFunction();
+> Object { name: "Ducati", type: "Moto", arrowFunction: arrowFunction(), plainFunction: plainFunction() }
+// arrowFunction();
+> Object { _name: "Jeep", _type: "Voiture" }
+// regularFunction();
+> undefined
+// this.startEngine();
+> Object { _name: "Jeep", _type: "Voiture" }
+```
+
+On voit qu'à chaque appel de `this` dans une fonction fléchée, on appelle le contexte du parent alors qu'avec des fonctions
+standards on appelle le contexte courant.
+
 ## Affectation par décomposition
 
 L'affectation par décomposition ou [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
-est une expression qui permet d'extraire dans des variables variables des données d'un tableau ou d'un objet.
+est une expression qui permet d'extraire dans des variables des données d'un tableau ou d'un objet.
 <br> C'est un procédé très utilisé pour les `import` de librairies et de méthodes.
 
 ```js
@@ -190,68 +252,6 @@ const apple = { name: 'apple', color: 'green', size: 'medium' };
 getFruitColor(apple);
 getFruitName(apple);
 ```
-
-## Scopes
-
-Pour comprendre comment fonctionnent les contextes/scopes en JavaScript et les utiliser avec `this`, voici un exemple.
-<br> La définition d'une [`Class`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) fait qu'elle possède automatiquement un contexte `this` où sont accessibles ses attributs
-et ses méthodes.
-<br> Il en est de même pour un [Objet](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects) classique.
-
-#### Définition de classe
-
-```js
-class Vehicle {
-  constructor(name, type) {
-    this._name = name;
-    this._type = type;
-    
-    const bike = {
-      name: 'Ducati',
-      type: 'Moto',
-      arrowFunction: () => console.log(this),
-      regularFunction () { console.log(this); },
-    };
-    const arrowFunction = () => console.log(this);
-    function regularFunction() { console.log(this); }
-
-    bike.arrowFunction();
-    bike.regularFunction();
-    arrowFunction();
-    regularFunction();
-    this.startEngine();
-  }
-
-  // Method definition, function is value, name function is key
-  startEngine () { // same as regularFunction: function () {}
-    console.log(this);
-  }
-}
-```
-
-#### Instance de classe
-
-```js
-const car = new Vehicle('Jeep', 'Voiture');
-```
-
-#### Résultat console
-
-```js
-// bike.arrowFunction();
-> Object { _name: "Jeep", _type: "Voiture" }
-// bike.regularFunction();
-> Object { name: "Ducati", type: "Moto", arrowFunction: arrowFunction(), plainFunction: plainFunction() }
-// arrowFunction();
-> Object { _name: "Jeep", _type: "Voiture" }
-// regularFunction();
-> undefined
-// this.startEngine();
-> Object { _name: "Jeep", _type: "Voiture" }
-```
-
-On voit qu'à chaque appel de `this` dans une fonction fléchée, on appelle le contexte du parent alors qu'avec des fonctions
-standards on appelle le contexte courant.
 
 ## Synchrone & Asynchrone
 
