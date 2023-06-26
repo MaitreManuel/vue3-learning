@@ -75,6 +75,7 @@ let fruitSalad = 'let\'s put some ' + fruits[0] + ' with ' + fruits[1];
 
 #### Chaîne type ["littéraux de gabarits"](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
 
+
 ```js
 // Single Line
 let fruitSalad = `let's put some apples with cherries`;
@@ -122,6 +123,73 @@ const sum = (a, b) => a + b;
 ```
 
 Sans les accolades, le `return` est implicite, ce qui n'est pas possible avec une fonction standard.
+
+## Affectation par décomposition
+
+L'affectation par décomposition ou [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
+est une expression qui permet d'extraire dans des variables variables des données d'un tableau ou d'un objet.
+<br> C'est un procédé très utilisé pour les `import` de librairies et de méthodes.
+
+```js
+const apple = { name: 'apple', color: 'green', size: 'medium' };
+const { color, name } = apple;
+
+console.log(color); // 'green'
+console.log(name); // 'apple'
+```
+
+```js
+const apple = ['apple', 'green', 'medium'];
+const [name, ...other] = apple;
+
+console.log(name); // 'apple'
+console.log(other); // ['green', 'medium']
+```
+
+## Modules
+
+Les [modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) `export` sont des variables,
+des objets ou des fonctions qui peuvent être importés pas d'autres scripts.
+<br> Le but premier est d'améliorer la relecture ainsi que la maintenabilité du code.
+
+```js
+const getFruitName = (fruit) => {
+  return fruit.name;
+};
+
+export default getFruitName;
+```
+
+```js
+import getFruitName from '@Src/utils.js';
+
+const apple = { name: 'apple', color: 'green', size: 'medium' };
+
+getFruitName(apple);
+```
+
+On peut aussi créer des modules par décomposition :
+
+```js
+const getFruitColor = (fruit) => {
+  return fruit.color;
+};
+
+const getFruitName = (fruit) => {
+  return fruit.name;
+};
+
+export { getFruitColor, getFruitName };
+```
+
+```js
+import { getFruitColor, getFruitName } from '@Src/utils.js';
+
+const apple = { name: 'apple', color: 'green', size: 'medium' };
+
+getFruitColor(apple);
+getFruitName(apple);
+```
 
 ## Scopes
 

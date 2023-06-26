@@ -3,7 +3,7 @@
     <v-row>
       <v-col>
         <h1 class="font-weight-light mb-16 text-center">
-          Home
+          About
         </h1>
       </v-col>
     </v-row>
@@ -14,6 +14,6 @@
 import { onMounted } from 'vue';
 
 onMounted(() => {
-  console.log('Home page loaded');
+  console.log('About page loaded');
 });
 </script>

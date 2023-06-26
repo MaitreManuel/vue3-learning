@@ -5,7 +5,7 @@
 #### Téléchargement du projet
 
 ```
-git clone https://gitlab-interne.dev.klee.lan.net/trystan.eveno/vue3-learning.git
+git clone https://github.com/MaitreManuel/vue3-learning.git
 cd vue3-learning
 ```
 
