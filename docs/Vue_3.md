@@ -516,8 +516,8 @@ et le `style` CSS.
   const myVar = ref('');
 
   onMounted(() => {
-  console.log('App loaded');
-});
+    console.log('App loaded');
+  });
 </script>
 ```
 
