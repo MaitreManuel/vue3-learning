@@ -428,26 +428,26 @@ Pour lier une valeur JavaScript en lecture et écriture à un élément de DOM, 
 - Type `text`
 
 ```js
-// text = ref('Apple')
+// text = 'Apple'
 <input v-model="text" type="text" />
 ```
 
 ```js
-// text = ref('An apple a day keeps the doctor away!')
+// text = 'An apple a day keeps the doctor away!'
 <textarea v-model="text"></textarea>
 ```
 
 - Type `checkbox` simple
 
 ```js
-// active = ref(true)
+// active = true
 <input v-model="active" type="checkbox" />
 ```
 
 - Type `checkbox` multiple
 
 ```js
-// fruits = ref(['apple'])
+// fruits = ['apple']
 <input v-model="fruits" type="checkbox" value="apple" />
 <input v-model="fruits" type="checkbox" value="cherry" />
 ```
@@ -473,7 +473,7 @@ Pour lier une valeur JavaScript en lecture et écriture à un élément de DOM, 
 - Type `select` multiple
 ```js
 // fruitsSalad = ['apple', 'cherry']
-<select v-model="selectedFruit">
+<select v-model="selectedFruit" multiple>
   <option disabled value="">Select one or more fruits :</option>
   <option value="apple">Apple</option>
   <option value="banana">Banana</option>
