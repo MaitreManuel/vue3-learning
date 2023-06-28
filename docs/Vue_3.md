@@ -282,19 +282,19 @@ Pour créer des listes dynamiques avec des tableaux, des objets et même des `ra
 
 ```js
 // fruits = ['apple', 'banana', 'cherry']
-<ul v-for="(fruit, index) in fruits">
+<ul v-for="(fruit, index) in fruits" :key="`fruit-${ index }-${ fruit }`">
   <li>{{ `${ index + 1 }. ${ fruit }` }}</li>
   <!-- <li>1. apple</li> -->
   <!-- <li>2. banana</li> -->
   <!-- <li>3. cherry</li> -->
 </ul>
 // fruit = { color: 'green', name: 'apple' }
-<ul v-for="(value, key, index) in fruits">
+<ul v-for="(value, key, index) in fruits" :key="`fruit-${ index }`">
   <li>{{ `${ index + 1 }. ${ key }: ${ value }` }}</li>
   <!-- <li>1. color: green</li> -->
   <!-- <li>2. name: apple</li> -->
 </ul>
-<ul v-for="idx in 3">
+<ul v-for="idx in 3" :key="`range-${ idx }`">
   <li>{{ idx }}</li>
   <!-- <li>1</li> -->
   <!-- <li>2</li> -->
@@ -697,6 +697,8 @@ Les `slots` sont une manière d'injecter des templates HTML dans un composant en
 </template>
 <script setup>
   import { ref } from 'vue';
+  
+  import Fruit from '@Src/components/Fruit.vue';
 
   const fruitColor = ref('Green');
   const fruitCondition = ref('pristine');
