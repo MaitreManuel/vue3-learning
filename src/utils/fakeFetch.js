@@ -1,4 +1,4 @@
-const fakeFetch = (time, cb = undefined, mockedData = ['apple', 'banana', 'cherry']) => {
+const fakeFetch = (time = 2500, cb = undefined, mockedData = ['apple', 'banana', 'cherry']) => {
   return new Promise((resolve, reject) => setTimeout(() => {
     const stashedFruits = mockedData;
 
@@ -10,4 +10,4 @@ const fakeFetch = (time, cb = undefined, mockedData = ['apple', 'banana', 'cherr
   }, time));
 };
 
-export default fakeFetch;
+export { fakeFetch };

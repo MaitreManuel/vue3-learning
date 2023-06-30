@@ -1,5 +1,6 @@
 <template>
   <p>{{ text }}</p>
+  <slot name="append"></slot>
 </template>
 
 <script setup>
